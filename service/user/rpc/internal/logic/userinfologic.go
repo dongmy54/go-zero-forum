@@ -7,6 +7,7 @@ import (
 	"forum/service/user/rpc/user"
 
 	"github.com/zeromicro/go-zero/core/logx"
+	"google.golang.org/grpc/status"
 )
 
 type UserInfoLogic struct {
@@ -24,7 +25,15 @@ func NewUserInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UserInfo
 }
 
 func (l *UserInfoLogic) UserInfo(in *user.UserInfoRequest) (*user.UserInfoResponse, error) {
-	// todo: add your logic here and delete this line
+	u, err := l.svcCtx.UserModel.FindOne(l.ctx, in.Id)
+	if err != nil {
+		return &user.UserInfoResponse{}, status.Error(400, err.Error())
+	}
 
-	return &user.UserInfoResponse{}, nil
+	return &user.UserInfoResponse{
+		Id:     u.Id,
+		Name:   u.Name,
+		Mobile: u.Gender,
+		Gender: u.Gender,
+	}, nil
 }
