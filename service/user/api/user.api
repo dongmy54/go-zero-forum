@@ -1,0 +1,24 @@
+// api路径下执行 goctl api go -api ./user.api -dir ./
+type (
+	// 注册请求
+	RegisterRequest {
+		Name     string `json:"name"`
+		Mobile   string `json:"mobile"`
+		Gender   string `json:"gender"`
+		Password string `json:"password"`
+	}
+	// 注册响应
+	RegisterResponse {
+		ID     int64  `json:"id"`
+		Name   string `json:"name"`
+		Mobile string `json:"mobile"`
+		Gender string `json:"gender"`
+	}
+)
+
+// api定义的地方
+service user {
+	@handler Register // 注册接口请求的方法名
+	get /api/user/register (RegisterRequest) returns (RegisterResponse)
+}
+
