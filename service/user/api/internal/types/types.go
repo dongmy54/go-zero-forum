@@ -24,3 +24,10 @@ type RegisterResponse struct {
 	Mobile string `json:"mobile"`
 	Gender string `json:"gender"`
 }
+
+type UserInfoResponse struct {
+	ID     int64  `json:"id"`
+	Name   string `json:"name"`
+	Mobile string `json:"mobile"`
+	Gender string `json:"gender"`
+}

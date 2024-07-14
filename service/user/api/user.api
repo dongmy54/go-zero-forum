@@ -24,6 +24,14 @@ type (
 		Token   string `json:"token"`
 		Expired int64  `json:"expired"`
 	}
+	// 用户信息请求 由于无需参数所以不写
+	// 用户信息响应
+	UserInfoResponse {
+		ID     int64  `json:"id"`
+		Name   string `json:"name"`
+		Mobile string `json:"mobile"`
+		Gender string `json:"gender"`
+	}
 )
 
 // api定义的地方
@@ -39,5 +47,9 @@ service user {
 @server (
 	jwt: Auth
 )
-service user {}
+service user {
+	@handler UserInfo
+	// 这里没有请求参数哦
+	get /api/user/info returns (UserInfoResponse)
+}
 
