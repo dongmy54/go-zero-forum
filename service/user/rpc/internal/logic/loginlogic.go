@@ -3,6 +3,7 @@ package logic
 import (
 	"context"
 
+	"forum/common/bcryptx"
 	"forum/service/user/rpc/internal/svc"
 	"forum/service/user/rpc/user"
 
@@ -32,7 +33,7 @@ func (l *LoginLogic) Login(in *user.LoginRequest) (*user.LoginResponse, error) {
 	}
 
 	// 判断密码对么
-	if u.Password != in.Password {
+	if err = bcryptx.ValidatePassword(u.Password, in.Password); err != nil {
 		return &user.LoginResponse{}, status.Error(400, "无效密码")
 	}
 
