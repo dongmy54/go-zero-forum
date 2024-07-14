@@ -3,6 +3,7 @@ package logic
 import (
 	"context"
 
+	"forum/common/bcryptx"
 	"forum/service/user/model"
 	"forum/service/user/rpc/internal/svc"
 	"forum/service/user/rpc/user"
@@ -34,11 +35,17 @@ func (l *RegisterLogic) Register(in *user.RegisterRequest) (*user.RegisterRespon
 
 	// 加这个判断是为了避免其它错误导致去创建
 	if err == model.ErrNotFound {
+		// 使用公用包的hash密码
+		hashPass, err := bcryptx.HashPassword(in.Password)
+		if err != nil {
+			return &user.RegisterResponse{}, status.Error(400, err.Error())
+		}
+
 		res, err := l.svcCtx.UserModel.Insert(l.ctx,
 			&model.Users{
 				Name:     in.Name,
 				Mobile:   in.Mobile,
-				Password: in.Password,
+				Password: hashPass, // 这里存hash密码
 				Gender:   in.Gender,
 			})
 
