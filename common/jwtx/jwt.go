@@ -17,7 +17,7 @@ import (
 //
 //	生成的令牌字符串
 //	错误对象，如果生成令牌过程中出现错误
-func GenToken(uid string, exp time.Time, signKey string) (string, error) {
+func GenToken(uid int64, exp time.Time, signKey string) (string, error) {
 	claims := jwt.MapClaims{
 		"uid": uid, // 用户id
 		"exp": exp.Unix(),

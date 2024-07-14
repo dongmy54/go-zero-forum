@@ -14,18 +14,30 @@ type (
 		Mobile string `json:"mobile"`
 		Gender string `json:"gender"`
 	}
+	// 登录请求
+	LoginRequest {
+		Mobile   string `json:"mobile"`
+		Password string `json:"password"`
+	}
+	// 登录响应
+	LoginResponse {
+		Token   string `json:"token"`
+		Expired int64  `json:"expired"`
+	}
 )
 
 // api定义的地方
 service user {
 	@handler Register // 注册接口请求的方法名
 	get /api/user/register (RegisterRequest) returns (RegisterResponse)
+
+	@handler Login
+	post /api/user/login (LoginRequest) returns (LoginResponse)
 }
 
 // 其下的所有service都会使用jwt鉴权,注意这里是server不是service
 @server (
 	jwt: Auth
 )
-// 具体服务先留着
-service User {}
+service user {}
 
