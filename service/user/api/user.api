@@ -22,3 +22,10 @@ service user {
 	get /api/user/register (RegisterRequest) returns (RegisterResponse)
 }
 
+// 其下的所有service都会使用jwt鉴权,注意这里是server不是service
+@server (
+	jwt: Auth
+)
+// 具体服务先留着
+service User {}
+

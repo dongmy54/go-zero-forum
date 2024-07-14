@@ -19,4 +19,9 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 		},
 	)
+
+	server.AddRoutes(
+		[]rest.Route{},
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+	)
 }
