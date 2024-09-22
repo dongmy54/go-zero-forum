@@ -1,0 +1,20 @@
+// api路径下执行 goctl api go -api ./user.api -dir ./
+type (
+	// 登录请求
+	PostCreateRequest {
+		UserId  int64  `json:"user_id"`
+		Title   string `json:"title"`
+		Content string `json:"content"`
+	}
+	// 登录响应
+	PostCreateResponse {
+		Id int64 `json:"id"`
+	}
+)
+
+// api定义的地方
+service post {
+	@handler add // 注册接口请求的方法名
+	post /api/post/add (PostCreateRequest) returns (PostCreateResponse)
+}
+
