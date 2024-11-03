@@ -25,11 +25,6 @@ message ShowCommentResp {
 	string Desc  = 2;
 }
 
-// 这里命名为User 它生成客户端代码时，会生成一个userclient的目录
-service User {
-  rpc Register(RegisterRequest) returns (RegisterResponse);
-}
-
 // 直接用目录名做服务名也可以
 service comment {
 	// 创建评论
