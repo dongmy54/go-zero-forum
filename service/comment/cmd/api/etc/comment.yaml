@@ -1,7 +1,7 @@
 Name: comemnt-api
 Host: 0.0.0.0
 Port: 8001
-Mode: Debug
+Mode: dev
 
 CommentRpcConf:
   Endpoints:

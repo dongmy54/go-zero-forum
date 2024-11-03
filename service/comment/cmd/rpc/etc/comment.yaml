@@ -22,16 +22,16 @@ Log:
 #   Sampler: 1.0
 #   Batcher: jaeger
 
-# 由于这里带缓存所以这里也是带缓存的版本
-Redis:
-  Host: localhost:6379
-  Type: node
-  Key : order-rpc
+# Redis:
+#   Host: localhost:6379
+#   Type: node
+#   Key : order-rpc
 DB:
   DataSource: root:12345678@tcp(127.0.0.1:3306)/forum?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
-# Cache:
-#   - Host: redis:6379
-#     Pass: G62m50oigInC30sf
+
+# 由于这里带缓存所以这里也是带缓存的版本
+Cache:
+   - Host: localhost:6379
 
 #rpc
 # TravelRpcConf:
