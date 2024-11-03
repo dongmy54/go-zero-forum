@@ -26,6 +26,13 @@ func NewShowCommentLogic(ctx context.Context, svcCtx *svc.ServiceContext) *ShowC
 // 展示评论
 func (l *ShowCommentLogic) ShowComment(in *pb.ShowCommentReq) (*pb.ShowCommentResp, error) {
 	// todo: add your logic here and delete this line
+	comment, err := l.svcCtx.CommentModel.FindOne(l.ctx, in.Id)
+	if err != nil {
+		return nil, err
+	}
 
-	return &pb.ShowCommentResp{}, nil
+	return &pb.ShowCommentResp{
+		UserId: comment.UserId,
+		Desc:   comment.Desc,
+	}, nil
 }
