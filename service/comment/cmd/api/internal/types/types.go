@@ -11,6 +11,7 @@ type CreateCommentResp struct {
 }
 
 type ShowCommentReq struct {
+	Id int64 `path:"id"` // 路径参数id 也要写出来
 }
 
 type ShowCommentResp struct {
