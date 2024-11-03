@@ -7,7 +7,7 @@ type CreateCommentReq struct {
 }
 
 type CreateCommentResp struct {
-	Id string `json:"id"`
+	Id int64 `json:"id"`
 }
 
 type ShowCommentReq struct {
