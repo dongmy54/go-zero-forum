@@ -5,6 +5,7 @@
 # 然后到xx.api目录下执行
 
 # sql生成
+# 注意这里生成的是带缓存的版本
 # 到deploy/script目录下执行
 # ./genModel.sh dabaseName tableName
 # 比如: ./genModel.sh forum comment
