@@ -1,0 +1,30 @@
+syntax = "v1"
+
+info(
+	title: "评论服务"
+	desc: "评论服务"
+	author: "dmy"
+	email: "615760433@qq.com"
+	version: "v1"
+)
+
+import (
+	"comment/comment.api"
+)
+
+// 先不登录
+@server(
+	prefix: api/v1
+	// group: homestayOrder
+	// jwt: JwtAuth
+)
+
+service order {
+	@doc "创建评论"
+	@handler createComment
+	post /comment  (CreateCommentReq) returns (CreateCommentResp)
+	
+	@doc "展示评论"
+	@handler ShowComment
+	get /comment/:id (ShowCommentReq) returns (ShowCommentResp)
+}

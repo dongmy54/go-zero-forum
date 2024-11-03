@@ -1,0 +1,22 @@
+// 这里定义具体的xxReq 和 xxResp
+
+// 一个请求做为一组去做
+type (
+	CreateCommentReq {
+		UserId    int64  `json:"userId"`
+		Desc      string  `json:"desc"`
+	}
+	CreateCommentResp {
+		Id string `json:"id"`
+	}
+)
+
+type (
+	ShowCommentReq {
+	}
+	ShowCommentResp {
+		UserId   int64  `json:"userId"`
+		Desc     string   `json:"desc"`
+	}
+)
+
