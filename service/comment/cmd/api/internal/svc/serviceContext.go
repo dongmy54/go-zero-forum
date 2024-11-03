@@ -17,6 +17,6 @@ func NewServiceContext(c config.Config) *ServiceContext {
 	return &ServiceContext{
 		Config: c,
 
-		CommentRpc: comment.NewComment(zrpc.MustNewClient(c.CommentlRpcConf)),
+		CommentRpc: comment.NewComment(zrpc.MustNewClient(c.CommentRpcConf)),
 	}
 }
