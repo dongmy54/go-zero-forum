@@ -18,7 +18,7 @@ import (
 // group: homestayOrder
 // jwt: JwtAuth
 )
-service order {
+service comment {
 	@doc "创建评论"
 	@handler createComment
 	post /comment (CreateCommentReq) returns (CreateCommentResp)

@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package pb;
+// go_package指定生成go包（也就是生成的.pb.go文件）的路径
+// PS: 路径中要带/
+// 在同级目录下执行 goctl rpc protoc *.proto --go_out=../ --go-grpc_out=./  --zrpc_out=../ --style=goZero 生成
+option go_package = "./pb";
+
+
+message CreateCommentReq {
+	int64	UserId = 1;
+	string Desc  = 2;
+}
+
+message CreateCommentResp {
+	int64 Id = 1;
+}
+
+message ShowCommentReq {
+	int64 Id = 1;
+}
+
+message ShowCommentResp {
+	int64	UserId = 1;
+	string Desc  = 2;
+}
+
+// 这里命名为User 它生成客户端代码时，会生成一个userclient的目录
+service User {
+  rpc Register(RegisterRequest) returns (RegisterResponse);
+}
+
+// 直接用目录名做服务名也可以
+service comment {
+	// 创建评论
+	rpc CreateComment(CreateCommentReq) returns (CreateCommentResp);
+	
+	// 展示评论
+	rpc ShowComment(ShowCommentReq) returns (ShowCommentResp);
+}

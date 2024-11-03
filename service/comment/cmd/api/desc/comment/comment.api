@@ -7,7 +7,7 @@ type (
 		Desc      string  `json:"desc"`
 	}
 	CreateCommentResp {
-		Id string `json:"id"`
+		Id int64 `json:"id"`
 	}
 )
 
