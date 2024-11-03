@@ -5,6 +5,7 @@ import (
 
 	"forum/service/comment/cmd/api/internal/svc"
 	"forum/service/comment/cmd/api/internal/types"
+	"forum/service/comment/cmd/rpc/pb"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -26,6 +27,16 @@ func NewCreateCommentLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Cre
 
 func (l *CreateCommentLogic) CreateComment(req *types.CreateCommentReq) (resp *types.CreateCommentResp, err error) {
 	// todo: add your logic here and delete this line
+	res, err := l.svcCtx.CommentRpc.CreateComment(l.ctx, &pb.CreateCommentReq{
+		UserId: req.UserId,
+		Desc:   req.Desc,
+	})
 
-	return
+	if err != nil {
+		return nil, err
+	}
+
+	return &types.CreateCommentResp{
+		Id: res.Id,
+	}, nil
 }

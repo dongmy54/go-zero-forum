@@ -26,6 +26,5 @@ func NewShowCommentLogic(ctx context.Context, svcCtx *svc.ServiceContext) *ShowC
 
 func (l *ShowCommentLogic) ShowComment(req *types.ShowCommentReq) (resp *types.ShowCommentResp, err error) {
 	// todo: add your logic here and delete this line
-
 	return
 }
