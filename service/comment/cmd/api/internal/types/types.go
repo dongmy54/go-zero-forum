@@ -18,3 +18,7 @@ type ShowCommentResp struct {
 	UserId int64  `json:"userId"`
 	Desc   string `json:"desc"`
 }
+
+type UploadRes struct {
+	Code int `json:"code"`
+}

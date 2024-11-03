@@ -22,3 +22,8 @@ type (
 	}
 )
 
+type (
+    UploadRes {
+        Code int `json:"code"`
+    }
+)

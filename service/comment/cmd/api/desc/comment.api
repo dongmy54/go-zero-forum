@@ -18,6 +18,7 @@ import (
 // group: homestayOrder
 // jwt: JwtAuth
 )
+// 只能有一个service 名
 service comment {
 	@doc "创建评论"
 	@handler createComment
@@ -26,5 +27,9 @@ service comment {
 	@doc "展示评论"
 	@handler ShowComment
 	get /comment/:id (ShowCommentReq) returns (ShowCommentResp)
+
+	// 可以没有Req信息 比如这里
+	@handler Upload
+	post /upload returns (UploadRes)
 }
 
