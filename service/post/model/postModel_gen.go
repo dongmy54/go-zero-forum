@@ -39,12 +39,13 @@ type (
 	}
 
 	Post struct {
-		Id        int64     `db:"id"`
-		Title     string    `db:"title"`   // 标题
-		Content   string    `db:"content"` // 内容
-		UserId    int64     `db:"user_id"` // 用户id
-		CreatedAt time.Time `db:"created_at"`
-		UpdatedAt time.Time `db:"updated_at"`
+		Id        int64        `db:"id"`
+		Title     string       `db:"title"`   // 标题
+		Content   string       `db:"content"` // 内容
+		UserId    int64        `db:"user_id"` // 用户id
+		CreatedAt time.Time    `db:"created_at"`
+		UpdatedAt time.Time    `db:"updated_at"`
+		DeletedAt sql.NullTime `db:"deleted_at"` // 删除时间
 	}
 )
 
@@ -84,8 +85,8 @@ func (m *defaultPostModel) FindOne(ctx context.Context, id int64) (*Post, error)
 func (m *defaultPostModel) Insert(ctx context.Context, data *Post) (sql.Result, error) {
 	forumPostIdKey := fmt.Sprintf("%s%v", cacheForumPostIdPrefix, data.Id)
 	ret, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
-		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?)", m.table, postRowsExpectAutoSet)
-		return conn.ExecCtx(ctx, query, data.Title, data.Content, data.UserId)
+		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?)", m.table, postRowsExpectAutoSet)
+		return conn.ExecCtx(ctx, query, data.Title, data.Content, data.UserId, data.DeletedAt)
 	}, forumPostIdKey)
 	return ret, err
 }
@@ -94,7 +95,7 @@ func (m *defaultPostModel) Update(ctx context.Context, data *Post) error {
 	forumPostIdKey := fmt.Sprintf("%s%v", cacheForumPostIdPrefix, data.Id)
 	_, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, postRowsWithPlaceHolder)
-		return conn.ExecCtx(ctx, query, data.Title, data.Content, data.UserId, data.Id)
+		return conn.ExecCtx(ctx, query, data.Title, data.Content, data.UserId, data.DeletedAt, data.Id)
 	}, forumPostIdKey)
 	return err
 }

@@ -38,5 +38,5 @@ func (l *AddLogic) Add(req *types.PostCreateRequest) (resp *types.PostCreateResp
 	// id, _ := result.LastInsertId()
 
 	l.svcCtx.PostModel.PracticeQuery(l.ctx)
-	return &types.PostCreateResponse{Id: 3}, nil
+	return &types.PostCreateResponse{Id: 7}, nil
 }
