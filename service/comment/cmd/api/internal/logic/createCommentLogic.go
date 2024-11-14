@@ -26,8 +26,11 @@ func NewCreateCommentLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Cre
 }
 
 func (l *CreateCommentLogic) CreateComment(req *types.CreateCommentReq) (resp *types.CreateCommentResp, err error) {
-	// todo: add your logic here and delete this line
-	res, err := l.svcCtx.CommentRpc.CreateComment(l.ctx, &pb.CreateCommentReq{
+	// 先上传一个context
+	myctx := context.WithValue(l.ctx, "UserId", 12)
+	myctx = context.WithValue(myctx, "UserRole", "admin")
+
+	res, err := l.svcCtx.CommentRpc.CreateComment(myctx, &pb.CreateCommentReq{
 		UserId: req.UserId,
 		Desc:   req.Desc,
 	})

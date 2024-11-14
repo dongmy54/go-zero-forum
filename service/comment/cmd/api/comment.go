@@ -29,3 +29,5 @@ func main() {
 	fmt.Printf("Starting server at %s:%d...\n", c.Host, c.Port)
 	server.Start()
 }
+
+// api拦截器 拦截发起rpc前的请求

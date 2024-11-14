@@ -8,6 +8,8 @@ ListenOn: 0.0.0.0:8080
 Log:
   ServiceName: comment.rpc
   Level: error
+  Encoding: plain 
+
 
 # #监控
 # Prometheus:

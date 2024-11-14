@@ -8,6 +8,10 @@ CommentRpcConf:
     - 127.0.0.1:8080
   NonBlock: true
 
+Log:
+  ServiceName: comment.api
+  Level: error
+  Encoding: plain 
 #jwtAuth
 # JwtAuth:
 #   AccessSecret: ae0536f9-6450-4606-8e13-5a19ed505da0
