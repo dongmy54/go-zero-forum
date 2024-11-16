@@ -10,7 +10,7 @@ CommentRpcConf:
 
 Log:
   ServiceName: comment.api
-  Level: error
+  Level: debug
   Encoding: plain 
 #jwtAuth
 # JwtAuth:

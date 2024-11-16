@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 
+	"forum/common/middelware"
 	"forum/service/comment/cmd/api/internal/config"
 	"forum/service/comment/cmd/api/internal/handler"
 	"forum/service/comment/cmd/api/internal/svc"
@@ -21,6 +22,11 @@ func main() {
 	conf.MustLoad(*configFile, &c)
 
 	server := rest.MustNewServer(c.RestConf)
+
+	// 添加api全局中间件 还可以对单个路由添加中间件
+	server.Use(middelware.LoggingMiddleware)
+	server.Use(middelware.AuthMiddleware)
+
 	defer server.Stop()
 
 	ctx := svc.NewServiceContext(c)
@@ -29,5 +35,3 @@ func main() {
 	fmt.Printf("Starting server at %s:%d...\n", c.Host, c.Port)
 	server.Start()
 }
-
-// api拦截器 拦截发起rpc前的请求
