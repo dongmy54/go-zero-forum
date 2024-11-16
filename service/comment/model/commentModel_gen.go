@@ -6,6 +6,7 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"forum/common/types"
 	"strings"
 	"time"
 
@@ -82,6 +83,12 @@ func (m *defaultCommentModel) FindOne(ctx context.Context, id int64) (*Comment, 
 }
 
 func (m *defaultCommentModel) Insert(ctx context.Context, data *Comment) (sql.Result, error) {
+	val , ok := ctx.Value(types.MetaDataCtxKey("GroupId")).(string)
+	if !ok {
+		fmt.Println("=========model中取context内容失败：======")
+	}
+	fmt.Printf("=========model中取context内容：%#v======\n", val)
+
 	forumCommentIdKey := fmt.Sprintf("%s%v", cacheForumCommentIdPrefix, data.Id)
 	ret, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?)", m.table, commentRowsExpectAutoSet)

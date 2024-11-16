@@ -4,6 +4,9 @@ import (
 	"context"
 	"flag"
 	"fmt"
+	"forum/common/types"
+	"slices"
+	"strings"
 
 	"forum/service/comment/cmd/rpc/internal/config"
 	"forum/service/comment/cmd/rpc/internal/server"
@@ -58,12 +61,30 @@ func RpcServiceInterceptor(ctx context.Context, req interface{}, info *grpc.Unar
 	// 处理元数据
 	for k, v := range md {
 		fmt.Printf("=========key: %#v value: %#v=====\n", k, v)
+		// 元数据 存入context中 v是一切片
+		mkey := GetMetaDataKey(k)
+		ctx = context.WithValue(ctx, types.MetaDataCtxKey(mkey), v[0])
 	}
 
 	resp, err = handler(ctx, req)
 	fmt.Printf("===========rpc服务端拦截 拦截结束=================")
 
 	return resp, err
+}
+
+// 处理大小写转换
+func GetMetaDataKey(oldKey string) string {
+	//定一个切片
+	metaKeys := []string{"UserId", "RoleId", "GroupId"}
+	index := slices.IndexFunc(metaKeys, func(str string) bool {
+		return strings.ToLower(str) == oldKey
+	})
+
+	if index != -1 {
+		return metaKeys[index]
+	} else {
+		return oldKey
+	}
 }
 
 // ===========rpc服务端拦截 拦截开始=================req ======> UserId:124 Desc:"元旦快乐"
