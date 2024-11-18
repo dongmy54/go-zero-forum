@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"flag"
 	"fmt"
 	"forum/common/types"
@@ -47,6 +48,11 @@ func main() {
 	s.Start()
 }
 
+type UserInfo struct {
+	UserId  string
+	GroupId string
+}
+
 // 服务端拦截器
 func RpcServiceInterceptor(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (resp interface{}, err error) {
 	fmt.Printf("===========rpc服务端拦截 拦截开始=================")
@@ -63,6 +69,12 @@ func RpcServiceInterceptor(ctx context.Context, req interface{}, info *grpc.Unar
 		fmt.Printf("=========key: %#v value: %#v=====\n", k, v)
 		// 元数据 存入context中 v是一切片
 		mkey := GetMetaDataKey(k)
+
+		if k == "userinfo" {
+			ui := UserInfo{}
+			json.Unmarshal([]byte(v[0]), &ui)
+			fmt.Printf("=========userinfo: %#v=====\n", ui)
+		}
 		ctx = context.WithValue(ctx, types.MetaDataCtxKey(mkey), v[0])
 	}
 

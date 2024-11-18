@@ -2,6 +2,7 @@ package svc
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"forum/service/comment/cmd/api/internal/config"
 	"forum/service/comment/cmd/rpc/comment"
@@ -26,14 +27,25 @@ func NewServiceContext(c config.Config) *ServiceContext {
 	}
 }
 
+type UserInfo struct {
+	UserId  string
+	GroupId string
+}
+
 // rpc 客户端拦截器
 func RpcClientInterceptor(ctx context.Context, method string, req, reply interface{}, cc *grpc.ClientConn, invoker grpc.UnaryInvoker, opts ...grpc.CallOption) error {
 	fmt.Println("=========客户端拦截器开始：==========")
 	fmt.Printf("req: %v\n", req)
 	fmt.Printf("method: %s\n", method)
 
+	ui := UserInfo{
+		UserId:  "124",
+		GroupId: "23",
+	}
+
+	data, _ := json.Marshal(ui)
 	// 添加元数据
-	md := metadata.New(map[string]string{"GroupId": "23"})
+	md := metadata.New(map[string]string{"GroupId": "23", "UserInfo": string(data)})
 	// 按顺序添加
 	md.Append("UserId", strconv.Itoa(ctx.Value("UserId").(int)))
 	md.Append("UserRole", ctx.Value("UserRole").(string))
