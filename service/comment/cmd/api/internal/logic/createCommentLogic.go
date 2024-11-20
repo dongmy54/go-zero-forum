@@ -26,6 +26,7 @@ func NewCreateCommentLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Cre
 }
 
 func (l *CreateCommentLogic) CreateComment(req *types.CreateCommentReq) (resp *types.CreateCommentResp, err error) {
+	//return nil, errorx.NewCodeError("50004", "创建评论失败")
 	// 先上传一个context
 	myctx := context.WithValue(l.ctx, "UserId", 12)
 	myctx = context.WithValue(myctx, "UserRole", "admin")
