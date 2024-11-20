@@ -57,10 +57,8 @@ func main() {
 			errcode = e.Code
 			errmsg = e.Message
 		} else {
-			fmt.Println("==========1111=================")
 			if gstatus, ok := status.FromError(causeErr); ok { // grpc err错误
 				grpcCode := uint32(gstatus.Code())
-				fmt.Println("==========11123=================", grpcCode)
 				if errorx.IsCodeErr(grpcCode) { //区分自定义错误跟系统底层、db等错误，底层、db错误不能返回给前端
 					errcode = grpcCode
 					errmsg = gstatus.Message()
