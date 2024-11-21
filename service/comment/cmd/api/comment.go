@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"net/http"
+	"strings"
 
 	"forum/common/errorx"
 	"forum/common/middelware"
@@ -50,18 +51,24 @@ func main() {
 		//错误返回
 		errcode := uint32(50000) // 默认的code
 		errmsg := "服务器开小差啦，稍后再来试一试"
+		DetailMsg := "" // 详细信息默认为空
 
 		causeErr := errors.Cause(err)                  // err类型
 		if e, ok := causeErr.(*errorx.CodeError); ok { //自定义错误类型
 			//自定义CodeError
 			errcode = e.Code
 			errmsg = e.Message
+			DetailMsg = e.Detail
 		} else {
 			if gstatus, ok := status.FromError(causeErr); ok { // grpc err错误
 				grpcCode := uint32(gstatus.Code())
 				if errorx.IsCodeErr(grpcCode) { //区分自定义错误跟系统底层、db等错误，底层、db错误不能返回给前端
 					errcode = grpcCode
-					errmsg = gstatus.Message()
+					msgs := strings.SplitN(gstatus.Message(), "|||", 2)
+					errmsg = msgs[0]
+					if len(msgs) == 2 {
+						DetailMsg = msgs[1]
+					}
 				}
 			}
 		}
@@ -69,6 +76,7 @@ func main() {
 		return http.StatusBadRequest, &errorx.CodeErrorResponse{
 			Code:    errcode,
 			Message: errmsg,
+			Detail:  DetailMsg,
 		}
 	})
 
