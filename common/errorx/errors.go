@@ -22,14 +22,17 @@ func New(code uint32, msg string) *CodeError {
 }
 
 // 对错误内容进行补充
-func NewErrDetail(codeErr *CodeError, Detail string) *CodeError {
-	codeErr.Detail = Detail
+func NewErrDetail(codeErr *CodeError, format string, args ...interface{}) *CodeError {
+	codeErr.Detail = fmt.Sprintf(format, args...)
 	return codeErr
 }
 
 // 默认错误信息 都一个code
-func NewDefaultError(msg string) error {
-	return New(SERVER_COMMON_ERROR.Code, msg)
+func NewDefaultError(format string, args ...interface{}) error {
+	code := SERVER_COMMON_ERROR.Code
+	codeErr := New(code, MapErrMsg(code))
+	codeErr.Detail = fmt.Sprintf(format, args...)
+	return codeErr
 }
 
 // 判断是否是自定义错误
