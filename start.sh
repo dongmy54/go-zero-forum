@@ -8,6 +8,16 @@ LOG_DIR="`pwd`/log"
 # 创建日志目录（如果不存在）
 mkdir -p $LOG_DIR
 
+# 尝试连接到Redis并获取PING响应
+# 检查redis-server进程
+if pgrep redis-server > /dev/null; then
+    echo "Redis服务正在运行"
+else
+    echo "Redis服务未启动"
+    redis-server &
+    echo "Redis服务已启动"
+fi
+
 # 定义服务名称列表
 SERVICES=(
     "comment"

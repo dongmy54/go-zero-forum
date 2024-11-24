@@ -38,6 +38,17 @@ func RpcClientInterceptor(ctx context.Context, method string, req, reply interfa
 	fmt.Printf("req: %v\n", req)
 	fmt.Printf("method: %s\n", method)
 
+	ctx = AddMd(ctx)
+	err := invoker(ctx, method, req, reply, cc, opts...)
+	if err != nil {
+		return err
+	}
+
+	fmt.Println("=========客户端拦截器 结束：==========")
+	return nil
+}
+
+func AddMd(ctx context.Context) context.Context {
 	ui := UserInfo{
 		UserId:  "124",
 		GroupId: "23",
@@ -47,17 +58,15 @@ func RpcClientInterceptor(ctx context.Context, method string, req, reply interfa
 	// 添加元数据
 	md := metadata.New(map[string]string{"GroupId": "23", "UserInfo": string(data)})
 	// 按顺序添加
-	md.Append("UserId", strconv.Itoa(ctx.Value("UserId").(int)))
-	md.Append("UserRole", ctx.Value("UserRole").(string))
-	ctx = metadata.NewOutgoingContext(ctx, md)
-
-	err := invoker(ctx, method, req, reply, cc, opts...)
-	if err != nil {
-		return err
+	if ctx.Value("UserId") != nil {
+		md.Append("UserId", strconv.Itoa(ctx.Value("UserId").(int)))
 	}
 
-	fmt.Println("=========客户端拦截器 结束：==========")
-	return nil
+	if ctx.Value("UserRole") != nil {
+		md.Append("UserRole", ctx.Value("UserRole").(string))
+	}
+	ctx = metadata.NewOutgoingContext(ctx, md)
+	return ctx
 }
 
 // Starting server at 0.0.0.0:8001...
