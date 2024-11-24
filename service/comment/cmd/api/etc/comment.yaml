@@ -13,8 +13,8 @@ Log:
   Level: debug
   Encoding: plain 
 
-JwtAuth:
-  AccessSecret: ae0536f9-6450-4606-8e13-5a19ed505da0
+JwtAuth: # 和user下保持一致
+  AccessSecret: abcdefg22434
 
 # Log:
 #   ServiceName: order-api

@@ -29,7 +29,7 @@ func main() {
 
 	// 添加api全局中间件 还可以对单个路由添加中间件
 	server.Use(middelware.LoggingMiddleware)
-	server.Use(middelware.AuthMiddleware)
+	// server.Use(middelware.AuthMiddleware)
 
 	// 初始化RPC客户端
 	commentRpcClient := comment.NewComment(zrpc.MustNewClient(c.CommentRpcConf))
