@@ -7,9 +7,9 @@ import (
 
 type Config struct {
 	rest.RestConf
-	// JwtAuth struct {
-	// 	AccessSecret string
-	// }
+	JwtAuth struct {
+		AccessSecret string
+	}
 
 	// 配置rpc
 	CommentRpcConf zrpc.RpcClientConf

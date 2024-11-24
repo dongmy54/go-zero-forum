@@ -1,14 +1,21 @@
 Name: user
 Host: 0.0.0.0
-Port: 8888
+Port: 8002
+Mode: dev
 
 # 一个rpc一个配置项
 # rpc通过etcd来做服务发现和注册
+# UserRpc:
+#   Etcd:
+#     Hosts:
+#     - 127.0.0.1:2379 # 注意这里是etcd的地址而非rpc服务的地址
+#     Key: user.rpc
+
 UserRpc:
-  Etcd:
-    Hosts:
-    - 127.0.0.1:2379 # 注意这里是etcd的地址而非rpc服务的地址
-    Key: user.rpc
+  Endpoints:
+    - 127.0.0.1:9002
+  NonBlock: true
+
 
 # 用于jwt授权
 Auth:

@@ -5,16 +5,16 @@ Mode: dev
 
 CommentRpcConf:
   Endpoints:
-    - 127.0.0.1:8080
+    - 127.0.0.1:9001
   NonBlock: true
 
 Log:
   ServiceName: comment.api
   Level: debug
   Encoding: plain 
-#jwtAuth
-# JwtAuth:
-#   AccessSecret: ae0536f9-6450-4606-8e13-5a19ed505da0
+
+JwtAuth:
+  AccessSecret: ae0536f9-6450-4606-8e13-5a19ed505da0
 
 # Log:
 #   ServiceName: order-api

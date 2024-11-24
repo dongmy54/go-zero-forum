@@ -15,8 +15,8 @@ import (
 // 先不登录
 @server (
 	prefix: api/v1
-// group: homestayOrder
-// jwt: JwtAuth
+	// group: comment
+	jwt: JwtAuth
 )
 // 只能有一个service 名
 service comment {
