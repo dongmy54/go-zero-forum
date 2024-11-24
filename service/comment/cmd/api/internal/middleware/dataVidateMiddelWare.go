@@ -15,7 +15,7 @@ import (
 
 // 做一些全局的数据验证
 // PS: 注意它是内部包在internal目录下
-// 注入sctx 即可做一些数据验证了哦
+// 注入sctx 即可做一些数据验证了哦 利用了闭包的特性
 func DataVaildateMiddleware(svctx *svc.ServiceContext) rest.Middleware {
 	// 嵌套多层
 	return func(next http.HandlerFunc) http.HandlerFunc {
