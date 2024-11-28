@@ -41,3 +41,9 @@ Cache:
 #     - 127.0.0.1:2003
 #   NonBlock: true
 
+# 假设我们去调用用户rpc
+UserRpcConf:
+  Endpoints:
+    - 127.0.0.1:9002
+  NonBlock: true
+

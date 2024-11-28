@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 
+	"forum/common/middelware/rpcserver"
 	"forum/service/user/rpc/internal/config"
 	"forum/service/user/rpc/internal/server"
 	"forum/service/user/rpc/internal/svc"
@@ -34,6 +35,8 @@ func main() {
 	})
 	defer s.Stop()
 
+	// 元数据处理
+	s.AddUnaryInterceptors(rpcserver.MetadataInterceptor)
 	fmt.Printf("Starting rpc server at %s...\n", c.ListenOn)
 	s.Start()
 }

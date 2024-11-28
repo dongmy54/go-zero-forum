@@ -6,6 +6,7 @@ import (
 	"forum/service/comment/cmd/rpc/internal/svc"
 	"forum/service/comment/cmd/rpc/pb"
 	"forum/service/comment/model"
+	"forum/service/user/rpc/user"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -35,6 +36,10 @@ func (l *CreateCommentLogic) CreateComment(in *pb.CreateCommentReq) (*pb.CreateC
 	res, err := l.svcCtx.CommentModel.Insert(l.ctx, &model.Comment{
 		UserId: in.UserId,
 		Desc:   in.Desc,
+	})
+
+	l.svcCtx.UserRpc.UserInfo(l.ctx, &user.UserInfoRequest{
+		Id: 0,
 	})
 
 	if err != nil {

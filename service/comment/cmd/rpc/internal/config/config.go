@@ -13,7 +13,8 @@ type Config struct {
 		DataSource string
 	}
 
-	Cache cache.CacheConf
+	Cache       cache.CacheConf
+	UserRpcConf zrpc.RpcClientConf
 	// 对于rpc 它的model关联放到svc层
 
 	// 这里可以定义其它rpc的连接在这里
