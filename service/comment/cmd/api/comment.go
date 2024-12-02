@@ -36,6 +36,7 @@ func main() {
 	// 做一些数据验证
 	dataVaildMidd := midd.DataVaildateMiddleware(ctx)
 	server.Use(dataVaildMidd)
+	server.Use(middelware.ResponseFormatter)
 
 	handler.RegisterHandlers(server, ctx)
 
