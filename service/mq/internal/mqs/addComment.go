@@ -2,7 +2,12 @@ package kq
 
 import (
 	"context"
+	"encoding/json"
 	"forum/service/mq/internal/svc"
+	"forum/service/mq/queuemsg"
+
+	"github.com/zeromicro/go-zero/core/logc"
+	"github.com/zeromicro/go-zero/core/logx"
 )
 
 /*
@@ -22,17 +27,13 @@ func NewAddCommentMq(ctx context.Context, svcCtx *svc.ServiceContext) *AddCommen
 }
 
 func (l *AddCommentMq) Consume(ctx context.Context, _, val string) error {
+	var message queuemsg.CommentMq
+	if err := json.Unmarshal([]byte(val), &message); err != nil {
+		logx.WithContext(l.ctx).Error("AddCommentMq->Consume Unmarshal err : %v , val : %s", err, val)
+		return err
+	}
 
-	// var message kqueue.ThirdPaymentUpdatePayStatusNotifyMessage
-	// if err := json.Unmarshal([]byte(val), &message); err != nil {
-	// 	logx.WithContext(l.ctx).Error("AddCommentMq->Consume Unmarshal err : %v , val : %s", err, val)
-	// 	return err
-	// }
-
-	// if err := l.execService(message); err != nil {
-	// 	logx.WithContext(l.ctx).Error("AddCommentMq->execService  err : %v , val : %s , message:%+v", err, val, message)
-	// 	return err
-	// }
+	logc.Info(l.ctx, "AddCommentMq->Consume message : %+v", message)
 
 	return nil
 }

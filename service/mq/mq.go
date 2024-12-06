@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"forum/service/mq/internal/config"
 	"forum/service/mq/internal/listen"
 
@@ -9,7 +10,7 @@ import (
 	"github.com/zeromicro/go-zero/core/service"
 )
 
-var configFile = flag.String("f", "etc/order.yaml", "Specify the config file")
+var configFile = flag.String("f", "etc/mq.yaml", "Specify the config file")
 
 func main() {
 	flag.Parse()
@@ -29,5 +30,6 @@ func main() {
 		serviceGroup.Add(mq)
 	}
 
+	fmt.Println("starting mq service...")
 	serviceGroup.Start()
 }
