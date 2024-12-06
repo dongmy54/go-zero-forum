@@ -16,6 +16,12 @@ Log:
 JwtAuth: # 和user下保持一致
   AccessSecret: abcdefg22434
 
+# kafka
+KqPusherConf:
+  Brokers:
+    - 127.0.0.1:9092
+  Topic: comment-topic
+
 # Log:
 #   ServiceName: order-api
 #   Level: error

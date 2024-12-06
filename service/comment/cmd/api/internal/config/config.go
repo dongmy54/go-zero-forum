@@ -13,4 +13,10 @@ type Config struct {
 
 	// 配置rpc
 	CommentRpcConf zrpc.RpcClientConf
+
+	// kafka
+	KqPusherConf struct {
+		Brokers []string
+		Topic   string
+	}
 }

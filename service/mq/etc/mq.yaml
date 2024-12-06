@@ -5,8 +5,8 @@ Mode: dev
 
 
 Log:
-  ServiceName: omq-service
-  Level: error
+  ServiceName: mq-service
+  Level: info
 
 # Redis:
 #   Host: redis:6379
@@ -18,8 +18,8 @@ CommentKqConf:
   Name: comment-mq
   Brokers:
     - localhost:9092
-  Group: comemnt-group
-  Topic: comemnt-topic
+  Group: comment-group
+  Topic: comment-topic
   Offset: first
   Consumers: 5 # 从kafka中消费的消费者数量
   Processors: 5 # 处理消息的处理器数量
