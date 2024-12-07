@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"forum/common/utils"
 	"forum/service/mq/internal/config"
 	"forum/service/mq/internal/listen"
 
@@ -16,7 +17,9 @@ func main() {
 	flag.Parse()
 	var c config.Config
 
-	conf.MustLoad(*configFile, &c)
+	// 使用我们自己相对路径
+	configPath := utils.GetDefaultConfigPath(*configFile)
+	conf.MustLoad(configPath, &c)
 
 	// log、prometheus、trace、metricsUrl.
 	if err := c.SetUp(); err != nil {
