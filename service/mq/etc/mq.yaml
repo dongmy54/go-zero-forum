@@ -24,6 +24,17 @@ CommentKqConf:
   Consumers: 5 # 从kafka中消费的消费者数量
   Processors: 5 # 处理消息的处理器数量
 
+
+UpdateCommentKqConf:
+  Name: update-comment-mq
+  Brokers:
+    - localhost:9092
+  Group: update-comment-group # 不同的group
+  Topic: comment-topic
+  Offset: first
+  Consumers: 5 # 从kafka中消费的消费者数量
+  Processors: 5 # 处理消息的处理器数量
+
 CommentRpcConf:
   Endpoints:
     - 127.0.0.1:9001

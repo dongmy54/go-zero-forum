@@ -10,30 +10,25 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
-/*
-*
-Listening to the payment flow status change notification message queue
-*/
-type AddCommentMq struct {
+type UpdateCommentMq struct {
 	ctx    context.Context
 	svcCtx *svc.ServiceContext
 }
 
-func NewAddCommentMq(ctx context.Context, svcCtx *svc.ServiceContext) *AddCommentMq {
-	return &AddCommentMq{
+func NewUpdateCommentMq(ctx context.Context, svcCtx *svc.ServiceContext) *UpdateCommentMq {
+	return &UpdateCommentMq{
 		ctx:    ctx,
 		svcCtx: svcCtx,
 	}
 }
 
-func (l *AddCommentMq) Consume(ctx context.Context, _, val string) error {
+func (l *UpdateCommentMq) Consume(ctx context.Context, _, val string) error {
 	var message queuemsg.CommentMq
 	if err := json.Unmarshal([]byte(val), &message); err != nil {
 		logx.WithContext(l.ctx).Error("AddCommentMq->Consume Unmarshal err : %v , val : %s", err, val)
 		return err
 	}
 
-	logc.Info(l.ctx, "AddCommentMq->Consume message : %+v", message)
-
+	logc.Info(l.ctx, "UpdateCommentMq->Consume message : %+v", message)
 	return nil
 }

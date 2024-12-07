@@ -17,8 +17,10 @@ func KqMqs(c config.Config, ctx context.Context, svcContext *svc.ServiceContext)
 
 	return []service.Service{
 		//Listening for changes in consumption flow status
+		// 他们都订阅comment-topic 但是不同的group<只要是这个topic的都会被消费掉>
+		// PS: 不要使用相同的topic和group 否则只有其中一个会执行
 		kq.MustNewQueue(c.CommentKqConf, kqMq.NewAddCommentMq(ctx, svcContext)),
-		//.....
+		kq.MustNewQueue(c.UpdateCommentKqConf, kqMq.NewUpdateCommentMq(ctx, svcContext)),
 	}
 
 }

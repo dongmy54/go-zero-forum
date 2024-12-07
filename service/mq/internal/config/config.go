@@ -12,8 +12,8 @@ type Config struct {
 	//Redis redis.RedisConf
 
 	// kq : pub sub
-	CommentKqConf kq.KqConf
-
+	CommentKqConf       kq.KqConf
+	UpdateCommentKqConf kq.KqConf
 	// rpc
 	CommentRpcConf zrpc.RpcClientConf
 }
